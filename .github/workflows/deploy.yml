@@ -20,10 +20,11 @@ jobs:
             public
             .cache
             node_modules
-          key: ${{ runner.os }}-gatsby-alexhyett-site-build-${{ github.run_id }}
+          key: ${{ runner.os }}-kreampiedpiper-site-build-${{ github.run_id }}
           restore-keys: |
-            ${{ runner.os }}-gatsby-alexhyett-site-build-
+            ${{ runner.os }}-kreampiedpiper-site-build-
       - name: Install dependencies
+        if: steps.node-modules-cache-build.outputs.cache-hit != 'true'
         run: npm install
       - name: Run Lint
         run: npm run lint
