@@ -41,8 +41,5 @@ jobs:
           role-to-assume: arn:aws:iam::117341061583:role/GithubKreampiedPiperS3SyncAccess
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: ${{ env.AWS_REGION }}
-      - name: AWS Hello World (Sts GetCallerIdentity)
-        run: |
-          aws sts get-caller-identity
-      # - name: Deploy to S3
-      #   run: aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete && aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
+      - name: Deploy to S3
+        run: aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete && aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
