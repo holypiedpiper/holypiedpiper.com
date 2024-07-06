@@ -32,7 +32,7 @@ const thingsILove = [
   "lusty comments",
   "dick pics",
   "making men moan",
-  "gifts & treats!",
+  "kind gifts",
 ];
 
 const socialLinksLookup = {
