@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+env:
+  AWS_REGION: "us-east-1"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -33,9 +35,9 @@ jobs:
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: <arn:aws:iam::117341061583:role/GithubKreampiedPiperS3SyncAccess>
+          role-to-assume: arn:aws:iam::117341061583:role/GithubKreampiedPiperS3SyncAccess
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
-          aws-region: us-east-1
+          aws-region: ${{ env.AWS_REGION }}
       - name: AWS Hello World (Sts GetCallerIdentity)
         run: |
           aws sts get-caller-identity
