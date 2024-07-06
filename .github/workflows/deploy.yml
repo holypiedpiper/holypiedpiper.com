@@ -34,7 +34,7 @@ jobs:
         with:
           role-to-assume: <arn:aws:iam::117341061583:role/GithubKreampiedPiperS3SyncAccess>
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: us-east-1
       - name: AWS Hello World (Sts GetCallerIdentity)
         run: |
           aws sts get-caller-identity
