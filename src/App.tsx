@@ -29,10 +29,10 @@ function App() {
 export default App;
 
 const thingsILove = [
-  "lusty comments",
+  "dirty talk",
   "dick pics",
   "making men moan",
-  "kind gifts",
+  "treats :)",
 ];
 
 const socialLinksLookup = {
@@ -42,6 +42,10 @@ const socialLinksLookup = {
     uri: "https://justfor.fans/kreampiedpiper",
     title: "JustForFans",
   },
+  cashApp: {
+    uri: 'https://cash.app/$kppgift',
+    title: 'CashApp'
+  }
 };
 
 const socialLinks = Object.values(socialLinksLookup);
