@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-env:
-  AWS_REGION: "us-east-1"
 permissions:
   id-token: write
   contents: read
@@ -25,7 +23,7 @@ jobs:
             public
             .cache
             node_modules
-          key: ${{ runner.os }}-kreampiedpiper-site-build-${{ github.run_id }}
+          key: ${{ runner.os }}-kreampiedpiper-site-build-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-kreampiedpiper-site-build-
       - name: Install dependencies
@@ -40,6 +38,9 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::117341061583:role/GithubKreampiedPiperS3SyncAccess
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: us-east-1
       - name: Deploy to S3
+        env:
+          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
+          CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
         run: aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete && aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
