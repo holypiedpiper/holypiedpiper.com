@@ -4,7 +4,7 @@ function App() {
   return (
     <>
       <header className="py-6">
-        <h1 className="text-5xl">kreampied Piper</h1>
+        <h1 className="text-5xl">holy pied Piper</h1>
       </header>
       <section className="py-4">
         <h2 className="text-3xl">Links</h2>
@@ -36,8 +36,8 @@ const thingsILove = [
 ];
 
 const socialLinksLookup = {
-  twitter: { uri: "https://x.com/kreampiedpiper", title: "Twitter / X" },
-  onlyfans: { uri: "https://onlyfans.com/kreampiedpiper", title: "OnlyFans" },
+  twitter: { uri: "https://x.com/holypiedpiper", title: "Twitter / X" },
+  onlyfans: { uri: "https://onlyfans.com/holypiedpiper", title: "OnlyFans" },
   justforfans: {
     uri: "https://justfor.fans/kreampiedpiper",
     title: "JustForFans",
