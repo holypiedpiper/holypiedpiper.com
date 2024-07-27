@@ -38,14 +38,10 @@ const thingsILove = [
 const socialLinksLookup = {
   twitter: { uri: "https://x.com/holypiedpiper", title: "Twitter / X" },
   onlyfans: { uri: "https://onlyfans.com/holypiedpiper", title: "OnlyFans" },
-  justforfans: {
-    uri: "https://justfor.fans/kreampiedpiper",
-    title: "JustForFans",
-  },
   cashApp: {
-    uri: 'https://cash.app/$kppgift',
-    title: 'CashApp'
-  }
+    uri: "https://cash.app/$kppgift",
+    title: "CashApp",
+  },
 };
 
 const socialLinks = Object.values(socialLinksLookup);
