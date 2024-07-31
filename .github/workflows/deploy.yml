@@ -46,4 +46,7 @@ jobs:
         env:
           S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
           CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-        run: aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete && aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
+        run: |
+          aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete --cache-control "max-age=31536000" --exclude "*" --include "assets/*" && \
+          aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete --exclude "assets/*" && \
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
