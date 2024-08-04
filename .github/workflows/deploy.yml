@@ -14,22 +14,16 @@ jobs:
     uses: ./.github/workflows/deploy-to-env.yml
     with:
       environment: production
+    secrets:
       aws_role_arn: ${{ secrets.AWS_GITHUB_OIDC_PROVIDER_SYNC_ROLE_ARN }}
       s3_bucket_name: ${{ secrets.S3_BUCKET_NAME }}
       cloudfront_distribution_id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-    secrets:
-      AWS_GITHUB_OIDC_PROVIDER_SYNC_ROLE_ARN: ${{ secrets.AWS_GITHUB_OIDC_PROVIDER_SYNC_ROLE_ARN }}
-      S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
-      CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
 
   deploy-dev:
     if: github.ref == 'refs/heads/dev'
     uses: ./.github/workflows/deploy-to-env.yml
     with:
       environment: development
-      aws_role_arn: ${{ secrets.AWS_GITHUB_OIDC_PROVIDER_SYNC_ROLE_ARN }}
-      s3_bucket_name: ${{ secrets.S3_BUCKET_NAME }}
-      cloudfront_distribution_id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
     secrets:
       AWS_GITHUB_OIDC_PROVIDER_SYNC_ROLE_ARN: ${{ secrets.AWS_GITHUB_OIDC_PROVIDER_SYNC_ROLE_ARN }}
       S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
