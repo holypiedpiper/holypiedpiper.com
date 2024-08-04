@@ -4,49 +4,25 @@ on:
   push:
     branches:
       - main
+      - dev
 permissions:
   id-token: write
   contents: read
 jobs:
-  deploy:
-    environment: production
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - name: Caching Node Modules
-        id: node-modules-cache-build
-        uses: actions/cache@v4
-        with:
-          path: |
-            public
-            .cache
-            node_modules
-          key: ${{ runner.os }}-kreampiedpiper-site-build-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-kreampiedpiper-site-build-
-      - name: Install dependencies
-        if: steps.node-modules-cache-build.outputs.cache-hit != 'true'
-        run: npm install
-      - name: Run Lint
-        run: npm run lint
-      - name: Build
-        run: npm run build
-      - name: Set AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        env:
-          AWS_GITHUB_OIDC_PROVIDER_SYNC_ROLE_ARN: ${{ secrets.AWS_GITHUB_OIDC_PROVIDER_SYNC_ROLE_ARN }}
-        with:
-          role-to-assume: ${{ secrets.AWS_GITHUB_OIDC_PROVIDER_SYNC_ROLE_ARN }}
-          role-session-name: GitHub_to_AWS_via_FederatedOIDC
-          aws-region: us-east-1
-      - name: Deploy to S3
-        env:
-          S3_BUCKET_NAME: ${{ secrets.S3_BUCKET_NAME }}
-          CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
-        run: |
-          aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete --cache-control "max-age=31536000" --exclude "*" --include "assets/*" && \
-          aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete --exclude "assets/*" && \
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
+  deploy-prod:
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/deploy-to-env.yml
+    with:
+      environment: production
+      aws_role_arn: ${{ secrets.AWS_GITHUB_OIDC_PROVIDER_SYNC_ROLE_ARN }}
+      s3_bucket_name: ${{ secrets.S3_BUCKET_NAME }}
+      cloudfront_distribution_id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+
+  deploy-dev:
+    if: github.ref == 'refs/heads/dev'
+    uses: ./.github/workflows/deploy-to-env.yml
+    with:
+      environment: development
+      aws_role_arn: ${{ secrets.AWS_GITHUB_OIDC_PROVIDER_SYNC_ROLE_ARN }}
+      s3_bucket_name: ${{ secrets.S3_BUCKET_NAME }}
+      cloudfront_distribution_id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
