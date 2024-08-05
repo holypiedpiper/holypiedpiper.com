@@ -6,6 +6,12 @@ on:
       environment:
         required: true
         type: string
+      cacheStaticAssetsDir:
+        required: true
+        type: string
+      envFile:
+        required: true
+        type: string
     secrets:
       AWS_GITHUB_OIDC_PROVIDER_SYNC_ROLE_ARN:
         required: true
@@ -41,8 +47,10 @@ jobs:
         run: npm install
       - name: Run Lint
         run: npm run lint
+      - name: Run Test
+        run: npm run test:ci
       - name: Build
-        run: npm run build
+        run: npx env-cmd -f ${{ inputs.envFile }} npm run build
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -51,6 +59,6 @@ jobs:
           aws-region: us-east-1
       - name: Deploy to S3
         run: |
-          aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete --cache-control "max-age=31536000" --exclude "*" --include "assets/*" && \
-          aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete --exclude "assets/*" && \
+          aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete --cache-control "max-age=31536000" --exclude "*" --include "${{ inputs.cacheStaticAssetsDir }}/*" && \
+          aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete --exclude "${{ inputs.cacheStaticAssetsDir }}/*" && \
           aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'
