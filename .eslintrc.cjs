@@ -19,7 +19,10 @@ module.exports = {
   },
   plugins: ["react-refresh"],
   rules: {
-    "react-refresh/only-export-components": ["off"],
+    "react-refresh/only-export-components": [
+      "warn",
+      { allowConstantExport: true },
+    ],
   },
   settings: {
     react: {
