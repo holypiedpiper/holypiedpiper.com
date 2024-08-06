@@ -1,0 +1,64 @@
+name: Deploy to Environment
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      cacheStaticAssetsDir:
+        required: true
+        type: string
+      envFile:
+        required: true
+        type: string
+    secrets:
+      AWS_GITHUB_OIDC_PROVIDER_SYNC_ROLE_ARN:
+        required: true
+      S3_BUCKET_NAME:
+        required: true
+      CLOUDFRONT_DISTRIBUTION_ID:
+        required: true
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Caching Node Modules
+        id: node-modules-cache-build
+        uses: actions/cache@v4
+        with:
+          path: |
+            public
+            .cache
+            node_modules
+          key: ${{ runner.os }}-kreampiedpiper-site-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-kreampiedpiper-site-build-
+      - name: Install dependencies
+        if: steps.node-modules-cache-build.outputs.cache-hit != 'true'
+        run: npm install
+      - name: Run Lint
+        run: npm run lint
+      - name: Run Test
+        run: npm run test:ci
+      - name: Build
+        run: npx env-cmd -f ${{ inputs.envFile }} npm run build
+      - name: Set AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_GITHUB_OIDC_PROVIDER_SYNC_ROLE_ARN }}
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: us-east-1
+      - name: Deploy to S3
+        run: |
+          aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete --cache-control "max-age=31536000" --exclude "*" --include "${{ inputs.cacheStaticAssetsDir }}/*" && \
+          aws s3 sync dist s3://${{ secrets.S3_BUCKET_NAME }} --delete --exclude "${{ inputs.cacheStaticAssetsDir }}/*" && \
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths '/*'

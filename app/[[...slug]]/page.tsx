@@ -1,6 +1,8 @@
-import "./App.css";
+export function generateStaticParams() {
+  return [{ slug: [""] }];
+}
 
-function App() {
+export default function Page() {
   return (
     <>
       <header className="py-6">
@@ -26,14 +28,7 @@ function App() {
   );
 }
 
-export default App;
-
-const thingsILove = [
-  "dirty talk",
-  "dick pics",
-  "making men moan",
-  "treats :)",
-];
+const thingsILove = ["dirty talk", "dick pics", "making men moan", "treats :)"];
 
 const socialLinksLookup = {
   twitter: { uri: "https://x.com/holypiedpiper", title: "Twitter / X" },
