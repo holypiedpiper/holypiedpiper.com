@@ -1,12 +1,6 @@
 import Script from "next/script";
 import { validateEnvironmentVariable } from "src/utilities/validateEnvironmentVariable";
 
-const heapAnalyticsId = validateEnvironmentVariable(
-  "NEXT_PUBLIC_HEAP_ANALYTICS_ID",
-  process.env.NEXT_PUBLIC_HEAP_ANALYTICS_ID,
-  console
-);
-
 export function HppNextHeapIo() {
   return (
     <Script
@@ -19,3 +13,9 @@ export function HppNextHeapIo() {
     />
   );
 }
+
+const heapAnalyticsId = validateEnvironmentVariable(
+  "NEXT_PUBLIC_HEAP_ANALYTICS_ID",
+  process.env.NEXT_PUBLIC_HEAP_ANALYTICS_ID,
+  console
+);
