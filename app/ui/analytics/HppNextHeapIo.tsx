@@ -3,11 +3,11 @@ import Script from "next/script";
 const NEXT_PUBLIC_HEAP_ANALYTICS_ID =
   process.env.NEXT_PUBLIC_HEAP_ANALYTICS_ID ?? "";
 
-  if (!NEXT_PUBLIC_HEAP_ANALYTICS_ID) {
-    console.error("Missing Heap Analytics Id environment variable");
-  }
+if (!NEXT_PUBLIC_HEAP_ANALYTICS_ID) {
+  console.error("Missing Heap Analytics Id environment variable");
+}
 
-export function HppHeapIo() {
+export function HppNextHeapIo() {
   return (
     <Script
       id="heap-analytics"
