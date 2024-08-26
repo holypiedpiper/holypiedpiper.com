@@ -1,11 +1,12 @@
 import { HppGoogleAnalytics } from "src/analytics/HppGoogleAnalytics";
+import { validateEnvironmentVariable } from "src/utilities/validateEnvironmentVariable";
 
-const GOOGLE_ANALYTICS_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID ?? "";
-
-if (!GOOGLE_ANALYTICS_ID) {
-  console.error("Missing Google Analytics Id environment variable");
-}
+const googleAnalyticsId = validateEnvironmentVariable(
+  "NEXT_PUBLIC_GOOGLE_ANALYTICS_ID",
+  process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID,
+  console
+);
 
 export function HppNextGoogleAnalytics() {
-  return <HppGoogleAnalytics googleAnalyticsId={GOOGLE_ANALYTICS_ID} />;
+  return <HppGoogleAnalytics googleAnalyticsId={googleAnalyticsId} />;
 }
