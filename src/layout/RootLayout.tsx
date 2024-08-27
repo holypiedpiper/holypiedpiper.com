@@ -1,11 +1,5 @@
 import "./RootLayout.css";
 
-export const metadata = {
-  title: "holy pied Piper",
-  description:
-    "Holy (kream) pied Piper is a hot FTM slut with a big ass who loves to suck cock and get filled with cum. Come here for videos, photos, and exclusive access to Piper's trans man pussy!",
-};
-
 export default function RootLayout({
   googleAnalytics,
   heapIo,
@@ -43,3 +37,9 @@ export default function RootLayout({
     </html>
   );
 }
+
+RootLayout.Metadata = {
+  title: "holy pied Piper",
+  description:
+    "Holy (kream) pied Piper is a hot FTM slut with a big ass who loves to suck cock and get filled with cum. Come here for videos, photos, and exclusive access to Piper's trans man pussy!",
+};

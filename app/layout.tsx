@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { HppNextGoogleAnalytics } from "./ui/analytics/HppNextGoogleAnalytics";
 import { HppNextHeapIo } from "./ui/analytics/HppNextHeapIo";
-import RootLayout, { metadata as HppMetadata } from "src/layout/RootLayout";
+import RootLayout from "src/layout/RootLayout";
 
-export const metadata: Metadata = HppMetadata;
+export const metadata: Metadata = RootLayout.Metadata;
 
 export default function NextRootLayout({
   children,
