@@ -17,5 +17,5 @@ export function HppNextHeapIo() {
 const heapAnalyticsId = validateEnvironmentVariable(
   "NEXT_PUBLIC_HEAP_ANALYTICS_ID",
   process.env.NEXT_PUBLIC_HEAP_ANALYTICS_ID,
-  console
+  console,
 );

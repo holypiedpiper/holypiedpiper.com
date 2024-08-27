@@ -4,13 +4,13 @@ import { validateEnvironmentVariable } from "src/utilities/validateEnvironmentVa
 const awsUserPoolId = validateEnvironmentVariable(
   "NEXT_PUBLIC_AWS_USER_POOL_ID",
   process.env.NEXT_PUBLIC_AWS_USER_POOL_ID,
-  console
+  console,
 );
 
 const awsUserPoolClientId = validateEnvironmentVariable(
   "NEXT_PUBLIC_AWS_USER_POOL_CLIENT_ID",
   process.env.NEXT_PUBLIC_AWS_USER_POOL_CLIENT_ID,
-  console
+  console,
 );
 
 export const AwsConfig: ResourcesConfig = {

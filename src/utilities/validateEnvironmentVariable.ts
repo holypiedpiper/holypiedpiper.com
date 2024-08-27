@@ -1,7 +1,7 @@
 export function validateEnvironmentVariable(
   name: string,
   value: string | undefined,
-  logger: Console
+  logger: Console,
 ) {
   if (typeof value === "undefined") {
     logger.error("Environment variable not set: " + name);
