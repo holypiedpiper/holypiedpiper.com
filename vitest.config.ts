@@ -6,4 +6,10 @@ export default defineConfig({
   test: {
     environment: "jsdom",
   },
+  resolve: {
+    alias: {
+      app: "/app",
+      src: "/src",
+    },
+  },
 });

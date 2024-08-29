@@ -47,6 +47,8 @@ jobs:
         run: npm install
       - name: Run Lint
         run: npm run lint
+      - name: Run Prettier Check
+        run: npx prettier . --check
       - name: Run Test
         run: npm run test:ci
       - name: Build
