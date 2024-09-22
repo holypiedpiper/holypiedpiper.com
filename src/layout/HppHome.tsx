@@ -35,10 +35,6 @@ const thingsILove = ["dirty talk", "dick pics", "making men moan", "treats :)"];
 const socialLinksLookup = {
   twitter: { uri: "https://x.com/holypiedpiper", title: "Twitter / X" },
   onlyfans: { uri: "https://onlyfans.com/holypiedpiper", title: "OnlyFans" },
-  instagram: {
-    uri: "https://www.instagram.com/holypiedpiper",
-    title: "Instagram",
-  },
   cashApp: {
     uri: "https://cash.app/$kppgift",
     title: "CashApp",
